@@ -1,0 +1,9 @@
+/build
+.gradle/
+.idea/
+app/build/
+app/release/
+local.properties
+gradlew
+gradlew.bat
+gradle/wrapper/
