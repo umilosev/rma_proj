@@ -5,22 +5,42 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
+import androidx.navigation.NavGraphBuilder
+import androidx.navigation.compose.composable
+import com.example.rma_proj_esus.login.view.contract.LoginContract
+import com.example.rma_proj_esus.login.view.factory.LoginViewModelFactory
+
+@OptIn(ExperimentalMaterial3Api::class)
+fun NavGraphBuilder.loginScreen(
+    route: String,
+    navController: NavController,
+    userPreferencesRepository: UserPreferenceRepository
+) = composable(route = route) {
+    val viewModel: LoginViewModel = viewModel(
+        factory = LoginViewModelFactory(userPreferencesRepository)
+    )
+    val state by viewModel.state.collectAsState()
+
+    LoginScreen(
+        userPreferencesRepository = userPreferencesRepository,
+        onLoginSuccess = {
+            navController.navigate("cats") {
+                popUpTo("login") { inclusive = true }
+            }
+        }
+    )
+}
 
 @Composable
 fun LoginScreen(
-    viewModel: LoginViewModel = viewModel(),
+    userPreferencesRepository: UserPreferenceRepository,
     onLoginSuccess: () -> Unit
 ) {
-    var username by remember { mutableStateOf("") }
-    var email by remember { mutableStateOf("") }
-    var isLoginButtonEnabled by remember { mutableStateOf(false) }
-
-    val usernameFlow = viewModel.userName.collectAsState("")
-    val emailFlow = viewModel.email.collectAsState("")
-
-    LaunchedEffect(username, email) {
-        isLoginButtonEnabled = username.isNotBlank() && email.isNotBlank()
-    }
+    val viewModel: LoginViewModel = viewModel(
+        factory = LoginViewModelFactory(userPreferencesRepository)
+    )
+    val state by viewModel.state.collectAsState()
 
     Column(
         modifier = Modifier
@@ -34,8 +54,8 @@ fun LoginScreen(
         Spacer(modifier = Modifier.height(16.dp))
 
         OutlinedTextField(
-            value = username,
-            onValueChange = { username = it },
+            value = state.username,
+            onValueChange = { viewModel.handleEvent(LoginContract.LoginEvent.UsernameChanged(it)) },
             label = { Text("Username") },
             modifier = Modifier.fillMaxWidth()
         )
@@ -43,8 +63,8 @@ fun LoginScreen(
         Spacer(modifier = Modifier.height(8.dp))
 
         OutlinedTextField(
-            value = email,
-            onValueChange = { email = it },
+            value = state.email,
+            onValueChange = { viewModel.handleEvent(LoginContract.LoginEvent.EmailChanged(it)) },
             label = { Text("Email") },
             modifier = Modifier.fillMaxWidth()
         )
@@ -53,10 +73,10 @@ fun LoginScreen(
 
         Button(
             onClick = {
-                viewModel.saveLoginCredentials(username, email)
+                viewModel.handleEvent(LoginContract.LoginEvent.LoginClicked)
                 onLoginSuccess()
             },
-            enabled = isLoginButtonEnabled
+            enabled = state.isLoginButtonEnabled
         ) {
             Text("Login")
         }
