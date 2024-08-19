@@ -14,11 +14,12 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.rma_proj_esus.cats.details.catsBreedsDetails
+import com.example.rma_proj_esus.cats.list.CatsBreedsListScreen
 import com.example.rma_proj_esus.cats.list.catBreedsListScreen
-import com.example.rma_proj_esus.login.view.RegistrationScreen
 import com.example.rma_proj_esus.login.datastore.UserPreferencesKeys.LOGIN_STATE_KEY
 import com.example.rma_proj_esus.login.datastore.userPreferencesDataStore
 import kotlinx.coroutines.flow.map
+import loginScreen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -42,30 +43,26 @@ fun AppNav() {
 
     NavHost(
         navController = navController,
-        startDestination = "cats"
+        startDestination = "login"
     ) {
-        composable("login") {
-            LoginScreen(
-                userPreferencesRepository = userPreferencesRepository, // Pass the repository
-                onLoginSuccess = { navController.navigate("cats") }
+
+        loginScreen(
+            userPreferencesRepository = userPreferencesRepository, // Pass the repository
+            route = "login",
+            navController = navController
+        )
+
+
+        catBreedsListScreen(
+            route = "cats",
+            navController = navController,
             )
-        }
-        composable("register") {
-            RegistrationScreen(
-                onRegisterSuccess = { navController.navigate("cats") }
+
+
+        catsBreedsDetails(
+            route = "cats/breed/{id}",
+            navController = navController,
             )
-        }
-        composable("cats") {
-            catBreedsListScreen(
-                route = "cats",
-                navController = navController,
-            )
-        }
-        composable("cats/breed/{id}") {
-            catsBreedsDetails(
-                route = "cats/breed/{id}",
-                navController = navController,
-            )
-        }
+
     }
 }

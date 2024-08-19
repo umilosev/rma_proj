@@ -1,5 +1,6 @@
 package com.example.rma_proj_esus.cats.list
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -52,7 +53,7 @@ fun NavGraphBuilder.catBreedsListScreen(
 ) = composable(route = route) {
     val catsBreedsListViewModel = viewModel<CatsBreedListViewModel>()
     val state by catsBreedsListViewModel.state.collectAsState()
-
+    Log.d("State", "State je : $state")
     CatsBreedsListScreen(
         state = state,
         onItemClick = {
