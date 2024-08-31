@@ -61,6 +61,11 @@ android {
 }
 
 dependencies {
+
+    implementation ("com.google.android.material:material:1.9.0")
+    implementation ("androidx.drawerlayout:drawerlayout:1.2.0")
+    implementation ("androidx.navigation:navigation-fragment-ktx:2.6.0")
+    implementation ("androidx.navigation:navigation-ui-ktx:2.6.0")
     // Kotlin serialization
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.1")
 
@@ -73,7 +78,6 @@ dependencies {
 
     /// https://mvnrepository.com/artifact/androidx.room/room-ktx
     implementation(libs.androidx.room.ktx)
-
 
     // https://mvnrepository.com/artifact/org.danekja/jdk-serializable-functional
     implementation("org.danekja:jdk-serializable-functional:1.8.1")
