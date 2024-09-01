@@ -1,8 +1,11 @@
+import android.util.Log
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
@@ -74,9 +77,15 @@ fun LoginScreen(
         Button(
             onClick = {
                 viewModel.handleEvent(LoginContract.LoginEvent.LoginClicked)
+
+                Log.d("APP", "State may have changed - " + state.email + " | "
+                        + state.username + " | "
+                        + state.isLoginButtonEnabled)
+
                 onLoginSuccess()
             },
-            enabled = state.isLoginButtonEnabled
+            enabled = state.isLoginButtonEnabled,
+            modifier = Modifier.background(Color.Red)
         ) {
             Text("Login")
         }
