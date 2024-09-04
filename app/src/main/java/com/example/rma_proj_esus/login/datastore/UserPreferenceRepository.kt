@@ -7,6 +7,7 @@ import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
@@ -72,5 +73,14 @@ class UserPreferenceRepository(private val context: Context) {
                  // Here you process the emitted value from the map transformation
                  Log.d("APP", message)
              }
+    }
+
+    suspend fun doesUserExist(): Boolean {
+        // Fetch data from DataStore and check if username or email exists
+        val preferences = context.dataStore.data.first() // Get the preferences snapshot
+
+        // Check for the existence of either USERNAME or EMAIL with non-null values
+        return preferences[PreferencesKeys.USERNAME].isNullOrEmpty().not() ||
+                preferences[PreferencesKeys.EMAIL].isNullOrEmpty().not()
     }
 }

@@ -83,14 +83,9 @@ fun LoginScreen(
 
         Button(
             onClick = {
+                viewModel.handleEvent(LoginContract.LoginEvent.LoginClicked)
 
-//                viewModel.handleEvent(LoginContract.LoginEvent.LoginClicked)
-//
-//                Log.d("APP", "State may have changed - " + state.email + " | "
-//                        + state.username + " | "
-//                        + state.isLoginButtonEnabled)
-//
-//                onLoginSuccess()
+                onLoginSuccess()
             },
             enabled = state.isLoginButtonEnabled,
             modifier = Modifier.background(Color.Red)
