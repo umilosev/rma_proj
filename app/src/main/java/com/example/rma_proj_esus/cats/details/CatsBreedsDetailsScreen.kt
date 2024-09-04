@@ -39,7 +39,6 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import coil.compose.rememberAsyncImagePainter
-import coil.compose.rememberImagePainter
 import coil.request.ImageRequest
 import com.example.rma_proj_esus.cats.details.model.CatBreedUiModel
 import com.example.rma_proj_esus.cats.details.model.PhotosUiModel

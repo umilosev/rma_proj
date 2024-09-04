@@ -13,7 +13,7 @@ import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFact
  * it would not log the custom header.
  */
 
-val okHttpClient = OkHttpClient.Builder()
+val catBreedsOkHttpClient = OkHttpClient.Builder()
     .addInterceptor {
         val updatedRequest = it.request().newBuilder()
             .addHeader("cat_key", "live_yRKxeWt0I2f9pgOh2saBHo6PUFewaOKemjA3MAwd2TmXDdHqNiXOaF8R0sSIZ7xL")
@@ -28,8 +28,13 @@ val okHttpClient = OkHttpClient.Builder()
     .build()
 
 
-val retrofit: Retrofit = Retrofit.Builder()
+val catBreedsRetrofit: Retrofit = Retrofit.Builder()
     .baseUrl("https://api.thecatapi.com/v1/")
-    .client(okHttpClient)
+    .client(catBreedsOkHttpClient)
+    .addConverterFactory(AppJson.asConverterFactory("application/json".toMediaType()))
+    .build()
+
+val lbRetrofit: Retrofit = Retrofit.Builder()
+    .baseUrl("https://rma.finlab.rs/")
     .addConverterFactory(AppJson.asConverterFactory("application/json".toMediaType()))
     .build()

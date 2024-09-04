@@ -7,12 +7,18 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
+import com.example.rma_proj_esus.cats.details.CatsDetailsViewModel
+import com.example.rma_proj_esus.cats.leaderboard.LeaderboardViewModel
+import com.example.rma_proj_esus.cats.repository.LeaderboardRepository.fetchLeaderboardByCategory
 import com.example.rma_proj_esus.login.view.contract.LoginContract
 import com.example.rma_proj_esus.login.view.factory.LoginViewModelFactory
+import kotlinx.coroutines.runBlocking
 
 @OptIn(ExperimentalMaterial3Api::class)
 fun NavGraphBuilder.loginScreen(
@@ -23,6 +29,7 @@ fun NavGraphBuilder.loginScreen(
     val viewModel: LoginViewModel = viewModel(
         factory = LoginViewModelFactory(userPreferencesRepository)
     )
+
     val state by viewModel.state.collectAsState()
 
     LoginScreen(
@@ -76,13 +83,14 @@ fun LoginScreen(
 
         Button(
             onClick = {
-                viewModel.handleEvent(LoginContract.LoginEvent.LoginClicked)
 
-                Log.d("APP", "State may have changed - " + state.email + " | "
-                        + state.username + " | "
-                        + state.isLoginButtonEnabled)
-
-                onLoginSuccess()
+//                viewModel.handleEvent(LoginContract.LoginEvent.LoginClicked)
+//
+//                Log.d("APP", "State may have changed - " + state.email + " | "
+//                        + state.username + " | "
+//                        + state.isLoginButtonEnabled)
+//
+//                onLoginSuccess()
             },
             enabled = state.isLoginButtonEnabled,
             modifier = Modifier.background(Color.Red)

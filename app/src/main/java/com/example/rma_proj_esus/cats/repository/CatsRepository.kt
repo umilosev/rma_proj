@@ -2,7 +2,6 @@ package com.example.rma_proj_esus.cats.repository
 
 import com.example.rma_proj_esus.cats.room_setup.cats.BreedsDao
 import android.content.Context
-import android.provider.Contacts.Photos
 import android.util.Log
 import com.example.rma_proj_esus.cats.api.breeds.BreedsApi
 import com.example.rma_proj_esus.cats.api.breeds.model.BreedsApiModel
@@ -12,7 +11,7 @@ import com.example.rma_proj_esus.cats.room_setup.cats.BreedsEntity
 import com.example.rma_proj_esus.cats.room_setup.cats.CatsDatabase
 import com.example.rma_proj_esus.cats.room_setup.photos.PhotosDao
 import com.example.rma_proj_esus.cats.room_setup.photos.PhotosEntity
-import com.example.rma_proj_esus.networking.retrofit
+import com.example.rma_proj_esus.networking.catBreedsRetrofit
 
 
 /**
@@ -20,8 +19,8 @@ import com.example.rma_proj_esus.networking.retrofit
  */
 object CatsRepository {
 
-    private val breedsApi: BreedsApi = retrofit.create(BreedsApi::class.java)
-    private val photosApi: PhotosApi = retrofit.create(PhotosApi::class.java)
+    private val breedsApi: BreedsApi = catBreedsRetrofit.create(BreedsApi::class.java)
+    private val photosApi: PhotosApi = catBreedsRetrofit.create(PhotosApi::class.java)
     private lateinit var breedsDao: BreedsDao
     private lateinit var photosDao: PhotosDao
     fun initialize(context: Context) {
