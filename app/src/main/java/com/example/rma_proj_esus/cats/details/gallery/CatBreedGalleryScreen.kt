@@ -97,11 +97,6 @@ fun CatBreedGalleryScreen(
 }
 
 @Composable
-fun FullScreenPhotoViewer(photo: Any, content: () -> Unit) {
-
-}
-
-@Composable
 fun FullScreenPhotoViewer(photo: PhotosUiModel, onClose: () -> Unit) {
     val transition = updateTransition(targetState = photo, label = "Photo Transition")
 
