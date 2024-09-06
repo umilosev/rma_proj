@@ -46,7 +46,7 @@ import com.example.rma_proj_esus.core.compose.AppIconButton
 import rs.edu.raf.raf_vezbe3compose.core.compose.NoDataContent
 
 
-fun NavGraphBuilder.catsBreedsDetails(
+fun NavGraphBuilder.catsBreedsDetailsScreen(
     route: String,
     navController: NavController,
 ) = composable(
@@ -72,7 +72,8 @@ fun NavGraphBuilder.catsBreedsDetails(
         state = state.value,
         onClose = {
             navController.navigateUp()
-        }
+        },
+        navController = navController
     )
 }
 
@@ -82,6 +83,7 @@ fun NavGraphBuilder.catsBreedsDetails(
 fun CatsDetailsScreen(
     state: CatsDetailsState,
     onClose: () -> Unit,
+    navController: NavController
 ) {
     Scaffold(
         topBar = {
@@ -131,7 +133,7 @@ fun CatsDetailsScreen(
                 } else if (state.breed != null) {
                     CatsBreedsColumn(
                         data = state.breed,
-                        photos = state.photo,
+                        navController = navController
                     )
                 } else {
                     NoDataContent(id = state.catID)
@@ -144,8 +146,7 @@ fun CatsDetailsScreen(
 @Composable
 private fun CatsBreedsColumn(
     data: CatBreedUiModel,
-    photos: List<PhotosUiModel>,
-
+    navController:NavController
     ) {
     val scrollState = rememberScrollState()
     Column(
@@ -154,29 +155,6 @@ private fun CatsBreedsColumn(
             .fillMaxSize(),
         verticalArrangement = Arrangement.Top,
     ) {
-        photos.forEach { photo ->
-            // Load the image using Coil
-            val painter = // You can customize the image loading here
-                // For example, you can set crossfade, placeholder, error placeholder, etc.
-                rememberAsyncImagePainter(
-                    ImageRequest.Builder(LocalContext.current).data(data = photo.url)
-                        .apply(block = fun ImageRequest.Builder.() {
-                            // You can customize the image loading here
-                            // For example, you can set crossfade, placeholder, error placeholder, etc.
-                        }).build()
-                ).also {
-                    // Display the image
-                    Image(
-                        painter = it,
-                        contentDescription = "Breed Image",
-                        modifier = Modifier
-                            .height(300.dp)
-                            .width(300.dp)
-                            .align(Alignment.CenterHorizontally),
-                        contentScale = ContentScale.Crop
-                    )
-                }
-        }
         Spacer(modifier = Modifier.height(16.dp))
 
         Text(
@@ -279,9 +257,22 @@ private fun CatsBreedsColumn(
             )
         }
 
+
+
         Spacer(modifier = Modifier.height(8.dp))
 
         val context = LocalContext.current
+
+        Button(
+            modifier = Modifier.width(100.dp).height(50.dp)
+                .background(Color.White),
+            onClick = {
+                navController.navigate(route = "cats/breed/gallery/${data.id}")
+            }
+        )  {
+            Text(text = "Galerija")
+        }
+                Spacer(modifier = Modifier.height(8.dp))
 
         Button(
             modifier = Modifier.width(250.dp).height(100.dp)

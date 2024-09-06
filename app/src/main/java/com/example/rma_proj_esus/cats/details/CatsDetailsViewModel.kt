@@ -42,11 +42,7 @@ class CatsDetailsViewModel(
                 val breed = withContext(Dispatchers.IO) {
                     repository.fetchBreedDetails(catID = catID)
                 }.asCatBreedUiModel()
-                val photo = withContext(Dispatchers.IO){
-                    repository.getBreedPhotos(catID = catID).map { it.asPhotosUiModel() }
-                }
                 setState { copy(breed=breed) }
-                setState{ copy(photo=photo) }
             } catch (error: IOException) {
                 setState {
                     copy(error = CatsDetailsState.DetailsError.DataUpdateFailed(cause = error))
@@ -91,10 +87,5 @@ class CatsDetailsViewModel(
         weight = this.weight,
         wikipedia_url = this.wikipedia_url,
     )
-    private fun PhotosEntity.asPhotosUiModel() = PhotosUiModel(
-        id= this.id.toString(),
-        url=this.url,
-        width=1,
-        height=1,
-    )
+
 }

@@ -69,7 +69,7 @@ object CatsRepository {
         }
     }
 
-    suspend fun getBreedPhotos(catID: String): List<PhotosEntity> {
+    suspend fun fetchBreedPhotos(catID: String): List<PhotosEntity> {
         // Check if photos for this breed are available in the local database
         val photos = photosDao.getPhotosForBreed(catID)
         return if (photos.isNotEmpty()) {

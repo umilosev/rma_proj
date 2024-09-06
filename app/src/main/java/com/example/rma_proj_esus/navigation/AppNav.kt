@@ -26,7 +26,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.example.rma_proj_esus.cats.details.catsBreedsDetails
+import com.example.rma_proj_esus.cats.details.catsBreedsDetailsScreen
+import com.example.rma_proj_esus.cats.details.gallery.catBreedGalleryScreen
 import com.example.rma_proj_esus.cats.leaderboard.leaderboardScreen
 import com.example.rma_proj_esus.cats.list.catBreedsListScreen
 import com.example.rma_proj_esus.login.datastore.UserPreferencesKeys.LOGIN_STATE_KEY
@@ -115,6 +116,14 @@ fun MainNavHost(
                 route = "cats",
                 navController = navController
             )
+            catsBreedsDetailsScreen(
+                route = "cats/breed/{id}",
+                navController = navController
+            )
+            catBreedGalleryScreen(
+                route = "cats/breed/gallery/{id}",
+                navController = navController
+            )
             leaderboardScreen(
                 route = "leaderboard/{id}",
                 navController = navController
@@ -140,6 +149,10 @@ fun LoginNavHost(
         )
         catBreedsListScreen(
             route = "cats",
+            navController = navController
+        )
+        catsBreedsDetailsScreen(
+            route = "cats/breed/{id}",
             navController = navController
         )
         leaderboardScreen(
